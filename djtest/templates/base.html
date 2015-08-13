@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World</title>
+</head>
+<body>
+    {% include 'navigation.html' %}
+
+    {% block content1 %}
+
+        <p> 这里是正文2，其他页面不重写将会继承 </p>
+
+    {% endblock %}
+    {% block content2 %}
+
+        <p> 这里是正文2，其他页面不重写将会继承 </p>
+
+    {% endblock %}
+
+    {% include 'bottom.html' %}
+</body>
+</html>

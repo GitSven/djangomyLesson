@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block content1 %}
+    ==================================
+    {% load staticfiles %}
+    <p><img src='{% static 'mylesson/logo.jpg' %}' alt='logo'/></p>
+    ==================================
+<br>
+    ==================================
+    <form method="post">
+
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="提交">
+
+    </form>
+    ==================================
+<br>
+    ==================================
+    <form method="get">
+
+        a: <input type="text" id="a" name="a">
+        b: <input type="text" id="b" name="b">
+        <p>result: <span id='result'></span></p>
+        <button type="button" id='sum'>提交</button>
+    </form>
+    ==================================
+<br>
+    ==================================
+    <div id="dict">Ajax 加载字典</div>
+        <p id="dict_result"></p>
+
+    <div id="list">Ajax 加载列表</div>
+        <p id="list_result"></p>
+    ==================================
+<br>
+    ==================================
+    <form method="get">
+        color: <input type="text" id="color" name="color" value="red">
+        number: <input type="text" id="number" name="number" value="1">
+        <p>result: <span id='pic_list'></span></p>
+        <button type="button" id='pic'>提交</button>
+    </form>
+
+
+    ==================================
+<br>
+    ==================================
+    <script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            //不刷新得到结果
+            $("#sum").click(function(){
+                var a = $("#a").val();
+                var b = $("#b").val();
+                $.get('{% url 'getnums' %}',{'a':a, 'b':b}, function(ret){
+                    $('#result').html(ret);
+                });
+            });
+            // 列表 list
+            $('#list').click(function(){
+                $.getJSON('{% url 'ajax_list' %}',function(ret){
+                    //返回值 ret 在这里是一个列表
+                    for (var i = ret.length - 1; i >= 0; i--){
+                    // 把 ret 的每一项显示在网页上
+                    $('#list_result').append(' ' + ret[i]);
+                    }
+                });
+            });
+            // 字典 dict
+            $('#dict').click(function(){
+                $.getJSON('{% url 'ajax_dict' %}',function(ret){
+                    //返回值 ret 在这里是一个字典
+                    $('#dict_result').append(ret.zqxt + '<br>');
+                    // 也可以用 ret['twz']
+                });
+            });
+            //获取指定条件的图片
+            $("#pic").click(function(){
+                var color = $("#color").val();
+                var number = $("#number").val();
+
+                $.get("{% url 'get_pic' %}", {'color':color,'number':number}, function(ret){
+                    $('#pic_list').html('') //清空前面的结果
+                    $.each(ret, function(index, item){
+                        $('#pic_list').append('<img src="/static/pics/'+item+'">');
+                    })
+                })
+            });
+        });
+    </script>
+{% endblock %}

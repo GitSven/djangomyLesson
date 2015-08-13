@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content2 %}
+
+    <p>重写block content2</p>
+
+    <li><a href="{% url 'hello_nums' 9 8 %}">Two num</a></li>
+    <li><a href="{% url 'hello_num' 7 %}">A num</a></li>
+
+    <li>{{ string }}</li>
+
+    <li>
+        {% for i in string %}
+        {{ i }}
+        {% endfor %}
+
+    </li>
+    <li>标题：{{ info_dict.title }}  作者：{{ info_dict.author }}  时间：{{ info_dict.time }}</li>
+    <li>
+        {% for k,v in info_dict.items %}
+        {{ k }}:{{ v }}
+        {% endfor %}
+
+    </li>
+    <li>
+        {% for i in lis %}
+            {% if i %}
+            {{ i }}
+            {% endif %}
+        {% endfor %}
+
+    </li>
+
+
+{% endblock %}
+
