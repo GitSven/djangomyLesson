@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}欢迎光临{% endblock title %} - sven news</title>
+    <title>{% block title %}欢迎光临{% endblock title %} - 自强学堂</title>
    
     <!-- Bootstrap -->
     <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
@@ -15,25 +15,54 @@
       <script src="http://apps.bdimg.com/libs/html5shiv/3.7/html5shiv.min.js"></script>
       <script src="http://apps.bdimg.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+    body {
+        padding-top: 60px;
+    }
+    </style>
     {% block css %}
-         
     {% endblock css %}
  
     {% block js %}
-         
     {% endblock js %}
   </head>
   <body>
-    <div>
+<table>
+    <tr><a href="/">自强学堂</a></tr>
+    <tr>
+          {% for column in nav_display_columns %}
+              <td>&nbsp;&nbsp;|&nbsp;&nbsp;</td>
+              <td><a href="{{ column.get_absolute_url }}">{{ column.name }}</a></td>
+              <td>&nbsp;&nbsp;|&nbsp;&nbsp;</td>
+          {% endfor %}
+
+    </tr>
+
+</table>
+ 
+    <div class="row clearfix">
         <div>
             {% block content %}
-            <h1>斯温 新闻网</h1>
+                <h1>自强 新闻网</h1>
             {% endblock content %}
         </div>
+    </div>
+ 
+    <div class="row clearfix" style="padding-top: 20px;">
+      <div>
+       <div class="well well-sm">
+        <div style="text-align:center;">
+         <a href="/aboutus/disclaimer.html">免责声明</a> |
+         <a href="/aboutus/index.html">关于我们</a>
+        </div> 
+        <div>
+         自强学堂为非盈利站点，提供的内容仅用于学习和培训。
+        </div>
+       </div>
+      </div>
     </div>
    
     <script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-{#    {% include "baidutongji.html" %}#}
   </body>
 </html>

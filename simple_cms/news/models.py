@@ -16,6 +16,9 @@ class Column(models.Model):
     slug = models.CharField('栏目网址', max_length=255, db_index=True)
     intro = models.TextField('栏目简介', default='')
 
+    nav_display = models.BooleanField('导航显示', default=False)
+    idx_display = models.BooleanField('首页显示', default=False)
+
     def __str__(self):
         return self.name
 
@@ -53,4 +56,4 @@ class Article(models.Model):
         verbose_name_plural = '新闻'
 
     def get_absolute_url(self):
-        return reverse('article', args=(self.slug,))
+        return reverse('article', args=(self.pk, self.slug,))

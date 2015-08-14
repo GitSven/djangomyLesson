@@ -27,6 +27,6 @@ urlpatterns = [
 
     url(r'^$', nv.index, name='index'),
     url(r'^column/(?P<column_slug>[^/]+)/$', nv.column_detail, name='column'),
-    url(r'^news/(?P<article_slug>[^/]+)/$', nv.article_detail, name='article'),
+    url(r'^news/(?P<pk>\d+)/(?P<article_slug>[^/]+)/$', nv.article_detail, name='article'),
 
 ]
