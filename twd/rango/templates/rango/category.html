@@ -16,8 +16,12 @@
             {% else %}
                 <strong>No pages currently in category.</strong>
             {% endif %}
+
+            <br /><a href="./add_page">新增文章</a>
+
         {% else %}
             The specified category {{ category_name }} does not exist!
+            <br /><a href="/rango/add_category/">Add Category</a>
         {% endif %}
     </body>
 </html>

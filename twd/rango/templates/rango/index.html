@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
 
-<html lang="zh">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>hello rango!!!</title>
@@ -21,7 +21,7 @@ td {
     text-align: left;
 }
 table#t01 {
-    width: 100%;
+    width: 90%;
     background-color: #f1f1c1;
 }
 </style>
@@ -38,10 +38,11 @@ table#t01 {
             <a href="/rango/category/{{ cat.slug }}" >{{ cat.name }}</a>——{{ cat.likes }}_Likes——{{ cat.views }}_Views</li>
     {% endfor %}
 {% else %}
-        <li>No Category...</li>
+    <li>No Category...</li>
+
     </ul>
 {% endif %}
-
+ <br /><a href="/rango/add_category/">Add Category</a>
 <h1>本站 TOP5</h1>
 <table id="t01">
     <tr>
@@ -73,7 +74,9 @@ table#t01 {
 
 </table>
 
-<br />
-    <a href="/rango/about/">About</a> <a href="/admin/">Admin</a><br />
+<ul>
+    <li>    <a href="/rango/about/">About</a>   </li>
+    <li>    <a href="/admin/">Admin</a> </li>
+</ul>
 </body>
 </html>
