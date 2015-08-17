@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 {% load static %}
-
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>hello rango!!!</title>
 </head>
 
-<style>
+<style type="text/css">
 table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
@@ -22,28 +22,45 @@ td {
 }
 table#t01 {
     width: 90%;
-    background-color: #f1f1c1;
+    background-color: #41CEA6;
 }
+a:link { text-decoration: none;color: blue}
+a:active { text-decoration:blink}
+a:hover { text-decoration:underline;color: red}
+a:visited { text-decoration: none;color: green}
 </style>
 
 <body>
 
 <img src="{% static "images/logo.jpg" %}" alt="hello rango" />
+{% if user.is_authenticated %}
+    <h1>Rango says... hello {{ user.username }}</h1>
+{% else %}
+    <h1>Rango says... hello world</h1>
+{% endif %}
+    <a href="restricted/">Restricted Page</a><br />
 
-<h1>Category</h1>
+{% if user.is_authenticated %}
+    <a href="logout/">Logout</a><br />
+    <br /><a href="/rango/add_category/">Add Category</a>
+{% else %}
+    <a href="/rango/register/">Register Here</a><br />
+    <a href="/rango/login/">Login</a><br />
+{% endif %}
+
+<h2>Category</h2>
 {% if category_all %}
     <ul>
     {% for cat in category_all %}
         <li>
-            <a href="/rango/category/{{ cat.slug }}" >{{ cat.name }}</a>——{{ cat.likes }}_Likes——{{ cat.views }}_Views</li>
+            <a href="/rango/category/{{ cat.slug }}" >{{ cat.name }}</a>__{{ cat.likes }}-Likes__{{ cat.views }}-Views</li>
     {% endfor %}
 {% else %}
     <li>No Category...</li>
-
     </ul>
 {% endif %}
- <br /><a href="/rango/add_category/">Add Category</a>
-<h1>本站 TOP5</h1>
+
+<h2>本站 TOP5</h2>
 <table id="t01">
     <tr>
         <th>Category TOP5</th>
@@ -54,29 +71,27 @@ table#t01 {
         <td>
     {% if category_t5 %}
         {% for catt5 in category_t5 %}
-            <a href="/rango/category/{{ catt5.slug }}">{{ catt5.name }}</a>——{{ catt5.likes }}_likes——{{ catt5.views }}_Views<br />
+            <a href="/rango/category/{{ catt5.slug }}">{{ catt5.name }}</a>__{{ catt5.likes }}-likes__{{ catt5.views }}-Views<br />
         {% endfor %}
     {% else %}
              No Category...
     {% endif %}
         </td>
-
         <td>
     {% if page_t5 %}
         {% for pt5 in page_t5 %}
-            <a href="{{ pt5.url }}" >{{ pt5.title }}</a>——{{ pt5.likes }}_likes——{{ pt5.views }}_Views<br />
+            <a href="{{ pt5.url }}" >{{ pt5.title }}</a>__{{ pt5.likes }}-likes__{{ pt5.views }}-Views<br />
         {% endfor %}
     {% else %}
          No Pages...
     {% endif %}
         </td>
     </tr>
-
 </table>
+<br />
+<a href="about/"> About </a><a href="/admin/"> Admin </a>
 
-<ul>
-    <li>    <a href="/rango/about/">About</a>   </li>
-    <li>    <a href="/admin/">Admin</a> </li>
-</ul>
+
 </body>
+
 </html>
