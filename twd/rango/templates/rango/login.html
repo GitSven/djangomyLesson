@@ -1,28 +1,24 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <!-- Is anyone getting tired of repeatedly entering the header over and over?? -->
-        <title>Rango</title>
-    </head>
+{% extends 'base.html' %}
 
-    <body>
-        <h1>Login to Rango</h1>
+{% load staticfiles %}
 
-        <form id="login_form" method="post" action="/rango/login/">
-            {% csrf_token %}
+{% block title_block %}Login Page{% endblock %}
 
-            <!--
-            username = request.POST.get('username')
-            password = request.POST.get('password')
-            -->
+{% block body_block %}
 
-            <input type="text" name="username" value="请输入用户名" size="50" />
-            <br />
-            <input type="password" name="password" value="请输入密码" size="50" />
-            <br />
+    <h1>Login to Rango</h1>
 
-            <input type="submit" value="submit" />
-        </form>
+    <form id="login_form" method="post" action="/rango/login/">
+        {% csrf_token %}
+        <!--
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        -->
+        username: <input type="text" name="username" value="" size="50" />
+        <br />
+        password: <input type="password" name="password" value="" size="50" />
+        <br />
 
-    </body>
-</html>
+        <input type="submit" value="submit" />
+    </form>
+{% endblock %}

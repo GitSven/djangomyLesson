@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title_block %}What a lovely day!!! {% endblock %}
+
+    </title>
+</head>
+
+<style type="text/css">
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th {
+    padding: 5px;
+    text-align: center;
+}
+td {
+    padding: 5px;
+    text-align: left;
+}
+table#t01 {
+    width: 90%;
+    background-color: #41CEA6;
+}
+a:link { text-decoration: none;color: blue}
+a:active { text-decoration:blink}
+a:hover { text-decoration:underline;color: red}
+a:visited { text-decoration: none;color: green}
+</style>
+
+<body>
+
+    <div>
+        {% block body_block %}默认内容{% endblock %}
+    </div>
+
+    <hr />
+
+    <div>
+        <ul>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'add_category' %}">Add Category</a></li>
+                <li><a href="{% url 'restricted' %}">Restricted Page</a><br /></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+
+            {% else %}
+                <li><a href="{% url 'register' %}">Register Here</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
+            {% endif %}
+
+            <li><a href="{% url 'about' %}"> About </a></li>
+            <li><a href="{% url 'index' %}"> Home </a></li>
+        </ul>
+    </div>
+
+</body>
+</html>
