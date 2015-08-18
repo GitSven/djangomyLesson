@@ -1,5 +1,7 @@
 # -*- coding:utf-8 -*-
 
+from datetime import datetime
+
 from django.shortcuts import render
 
 from django.http import HttpResponse
@@ -14,11 +16,45 @@ from .forms import CategoryForm, PageForm, UserForm, UserProfileForm
 
 
 def index(request):
+    # request.session.set_test_cookie()
     category_all = Category.objects.all()
     category_t5 = Category.objects.order_by('-likes')[:5] #-likes,按照likes降序排列
     page_t5 = Page.objects.order_by('-likes')[:5]
     context_dict = {'category_t5': category_t5, 'page_t5':page_t5, 'category_all':category_all}
-    return render(request, 'rango/index.html', context_dict)
+    # 获取访问次数,有的话是多少就是多少，没的话置为 1
+    visits = request.session.get('visits')
+    if not visits:
+        visits = 1
+    reset_last_visit_time = False
+    # response = render(request, 'rango/index.html', context_dict)
+    # session中是否存在上次访问时间,有的话获取。没有，获取到的是空
+    last_visit = request.session.get('last_visit')
+    if last_visit:
+        # 是的 存在
+        # 获取到指定格式的last_visit_time用于后面计算
+        last_visit_time = datetime.strptime(last_visit[:-7], '%Y-%m-%d %H:%M:%S')
+        # print 'last_visit_time', last_visit_time, 'now', datetime.now()
+        # 距离上次访问超过一天了吗
+        if (datetime.now() - last_visit_time).seconds > 0:
+            # print (datetime.now() - last_visit_time).seconds
+            visits += 1
+            # 是的，那么访问次数 + 1，同时更新标记置为True
+            reset_last_visit_time = True
+    else:
+        # no，不存在，那么该重置时间了
+        reset_last_visit_time = True
+
+    if reset_last_visit_time:
+        request.session['last_visit'] = str(datetime.now())
+        request.session['visits'] = visits
+
+    context_dict['visits'] = visits
+    # 早一步设置好，后面设置cookie的时候就可以使用里面的信息了
+    response = render(request, 'rango/index.html', context_dict)
+
+
+
+    return response
 
 
 def category(request,category_name_slug):
@@ -36,7 +72,10 @@ def category(request,category_name_slug):
 
 
 def about(request):
-    return render(request, 'rango/about.html', {})
+    visits = request.session.get('visits')
+    if not visits:
+        visits = 1
+    return render(request, 'rango/about.html', {'visits': visits})
 
 
 def add_category(request):
@@ -81,6 +120,9 @@ def add_page(request, category_name_slug):
 
 
 def register(request):
+    # if request.session.test_cookie_worked():
+    #     print '>>> TEST COOKIE WORKED!'
+    #     request.session.delete_test_cookie()
     registered = False
 
     if request.method == 'POST':

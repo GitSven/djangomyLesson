@@ -1,6 +1,4 @@
-{% extends 'base.html' %}
-
-{% load staticfiles %}
+{% extends 'rango/base.html' %}
 
 {% block title_block %}
    {% if user.is_authenticated %}
@@ -13,48 +11,56 @@
 
 {% block body_block %}
 
-<img src="{% static "images/logo.jpg" %}" alt="hello rango" />
+{#<img src="{% static "images/logo.jpg" %}" alt="hello rango" />#}
 
-<h2>Category</h2>
-{% if category_all %}
-    <ul>
-    {% for cat in category_all %}
-        <li>
-            <a href="{% url 'category' cat.slug %}" >{{ cat.name }}</a>__{{ cat.likes }}-Likes__{{ cat.views }}-Views
-        </li>
-    {% endfor %}
-{% else %}
-    <li>No Category...</li>
-    </ul>
-{% endif %}
+<div class="hero-unit">
+    <h1>Ready to Rango</h1>
 
-<h2>本站 TOP5</h2>
-<table id="t01">
-    <tr>
-        <th>Category TOP5</th>
-        <th>Pages TOP5</th>
-    </tr>
 
-    <tr>
-        <td>
-    {% if category_t5 %}
-        {% for catt5 in category_t5 %}
-            <a href="{% url 'category' catt5.slug %}">{{ catt5.name }}</a>__{{ catt5.likes }}-likes__{{ catt5.views }}-Views<br />
-        {% endfor %}
-    {% else %}
-             No Category...
-    {% endif %}
-        </td>
-        <td>
-    {% if page_t5 %}
-        {% for pt5 in page_t5 %}
-            <a href="{{ pt5.url }}" >{{ pt5.title }}</a>__{{ pt5.likes }}-likes__{{ pt5.views }}-Views<br />
-        {% endfor %}
-    {% else %}
-         No Pages...
-    {% endif %}
-        </td>
-    </tr>
-</table>
+</div>
+
+<div class="row placeholders">
+
+    <div class="col-xs-12 col-sm-6 placeholder">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Category TOP5</h3>
+            </div>
+            {% if category_t5 %}
+            <ul class="list-group">
+                {% for catt5 in category_t5 %}
+                    <li class="list-group-item">
+                        <a href="{% url 'category' catt5.slug %}">{{ catt5.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                No Category...
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 placeholder">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Pages TOP5</h3>
+            </div>
+        {% if page_t5 %}
+            <ul class="list-group">
+                {% for pt5 in page_t5 %}
+                    <li class="list-group-item">
+                        <a href="{{ pt5.url }}" >{{ pt5.title }}</a>&nbsp;-&nbsp;{{ pt5.category.name }}&nbsp;({{ pt5.views }}&nbsp;Views)
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            No Pages...
+        {% endif %}
+        </div>
+    </div>
+
+</div>
+
+    <p>访问次数：{{ visits }}</p>
 
 {% endblock %}
