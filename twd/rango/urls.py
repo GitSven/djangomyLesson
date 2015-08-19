@@ -18,4 +18,6 @@ urlpatterns = patterns('',
     url(r'^logout/$', user_logout, name='logout'),
     url(r'^restricted/$', restricted, name='restricted'),
 
+    url(r'^search/$', search, name='search'),
+
 )
