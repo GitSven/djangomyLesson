@@ -73,7 +73,7 @@ BASE_DIR = settings.BASE_DIR  # 项目目录
 # 假设图片放在static/pics/里面
 PICS = os.listdir(os.path.join(BASE_DIR, 'common_static/pics'))
 
-print PICS  # 启动时终端上可以看到有哪些图片，我只放了一张，测试完后这一行可以删除
+# print PICS  # 启动时终端上可以看到有哪些图片，我只放了一张，测试完后这一行可以删除
 
 
 def get_pic(request):
